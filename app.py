@@ -1,0 +1,73 @@
+import os
+from models.schema import *
+from flask_admin import Admin, AdminIndexView
+from flask_admin.contrib.sqla import ModelView
+from flask import Flask, render_template, request, url_for, redirect
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+
+app = Flask(__name__)
+app.secret_key = 'my-secret-key'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@app.before_first_request
+def create_table():
+    db.create_all()
+    if adminUser.query.filter_by(username="root").first() is None:
+        adminID = adminUser(username="root", password="root")
+        db.session.add(adminID)
+    db.session.commit()
+
+@login_manager.user_loader
+def load_user(user_id):
+	return adminUser.query.get(int(user_id))
+
+# class MyAdminIndexView(AdminIndexView):
+#     def is_accessible(self):
+#         if current_user.is_authenticated and (current_user.username == 'root'):
+#             return True
+#     def inaccessible_callback(self, name, **kwargs):
+#         return redirect(url_for('login', next=request.url))
+
+admin = Admin(app)#, index_view=MyAdminIndexView())
+admin.add_view(ModelView(commandBox,db.session))
+admin.add_view(ModelView(adminUser,db.session))
+
+
+@app.route('/')
+def home():
+    cmds = commandBox.query.all()
+    return render_template('index.html', cmds=cmds)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/gal')
+def gal():
+    return render_template('gal.html')
+
+@app.route('/events')
+def events():
+    return render_template('events.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/submit', methods=['POST'])
+def  submit():
+    name = request.form['name']
+    idea =  request.form['command']
+    cmd = commandBox(name=name,command=idea)
+    db.session.add(cmd)
+    db.session.commit()
+    return redirect('/')
+
+if __name__ == "__main__":
+    from db import db
+    db.init_app(app)
+    app.run(debug=True)
