@@ -2,6 +2,7 @@
 
 ## To Install Requirement
 
+### if you have python3
 ~~~
 pip3 install -r requirements.txt
 ~~~
