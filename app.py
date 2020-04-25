@@ -2,10 +2,10 @@ import os
 from models.schema import *
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect,send_from_directory
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 app.secret_key = 'my-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,8 +36,9 @@ admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(ModelView(commandBox,db.session))
 admin.add_view(ModelView(adminUser,db.session))
 admin.add_view(ModelView(event,db.session))
-
-
+@app.route('/sitemap.xml')
+def staticsitemap():
+    return send_from_directory(app.static_folder,request.path[1:])
 
 @app.route('/')
 def home():
