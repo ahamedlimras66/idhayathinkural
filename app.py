@@ -25,22 +25,31 @@ def create_table():
 def load_user(user_id):
 	return adminUser.query.get(int(user_id))
 
-# class MyAdminIndexView(AdminIndexView):
-#     def is_accessible(self):
-#         if current_user.is_authenticated and (current_user.username == 'root'):
-#             return True
-#     def inaccessible_callback(self, name, **kwargs):
-#         return redirect(url_for('login', next=request.url))
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        if current_user.is_authenticated:
+            return True
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('login', next=request.url))
 
-admin = Admin(app)#, index_view=MyAdminIndexView())
+admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(ModelView(commandBox,db.session))
 admin.add_view(ModelView(adminUser,db.session))
+admin.add_view(ModelView(event,db.session))
+
 
 
 @app.route('/')
 def home():
     cmds = commandBox.query.all()
-    return render_template('index.html', cmds=cmds)
+    events = event.query.first()
+    events = str(events.dateTime)
+    return render_template('index.html',
+                            cmds=cmds,
+                            month=events[5:7],
+                            date=events[8:10],
+                            year=events[0:4],
+                            time=events[10:])
 
 @app.route('/about')
 def about():
@@ -66,6 +75,21 @@ def  submit():
     db.session.add(cmd)
     db.session.commit()
     return redirect('/')
+
+@app.route('/login')
+def login():
+    return render_template('admin.html')
+
+@app.route('/login_check', methods=['POST', 'GET'])
+def loginCheck():
+    userName = request.form['username']
+    password = request.form['password']
+    user = adminUser.query.filter_by(username=userName).first()
+    if user:
+        if user.password == password:
+            login_user(user, remember=False)
+            return redirect('/admin')
+    return render_template('admin.html', name = "invalid login")
 
 if __name__ == "__main__":
     from db import db
