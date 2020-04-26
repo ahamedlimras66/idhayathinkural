@@ -19,7 +19,7 @@ def create_table():
     if adminUser.query.filter_by(username="root").first() is None:
         adminID = adminUser(username="root", password="root")
         db.session.add(adminID)
-    db.session.commit()
+        db.session.commit()
 
 @login_manager.user_loader
 def load_user(user_id):
