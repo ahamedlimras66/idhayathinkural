@@ -76,9 +76,9 @@ def Donate():
 def Requirement():
     return render_template('Requirement.html')
     
-@app.route('/Report')
-def Report():
-    return render_template('Report.html')
+@app.route('/report')
+def report():
+    return render_template('report.html')
 
 @app.route('/submit', methods=['POST'])
 def  submit():
