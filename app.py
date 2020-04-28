@@ -67,6 +67,10 @@ def events():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+    
+@app.route('/Donate')
+def Donate():
+    return render_template('Donate.html')
 
 @app.route('/submit', methods=['POST'])
 def  submit():

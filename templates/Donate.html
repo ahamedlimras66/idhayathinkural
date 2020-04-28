@@ -39,6 +39,17 @@
 	  font-size: 16px;
 	  margin: 4px 2px;
 	  cursor: pointer;
+	  
+	}
+	input[type=text], select, textarea {
+	  width: 100%;
+	  padding: 12px;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  box-sizing: border-box;
+	  margin-top: 6px;
+	  margin-bottom: 16px;
+	  resize: vertical;
 	}
 	</style>
   </head>
@@ -78,13 +89,14 @@
 	  </nav>
     <!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('static/images/f.png');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('static/images/h1.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
            
-           
+            <h1 class="mb-2 bread">Donate</h1>
+			<p class="breadcrumbs"><span class="mr-2"><a href="\">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Donate <i class="ion-ios-arrow-forward"></i></span></p>
 			
 			
 			<br>
@@ -109,16 +121,45 @@
         <div class="container">
           <div class="row d-flex justify-content-center">
             <div class="col-md-7 text-center heading-section heading-section-white heading-section-no-line ftco-animate">
-        <h2>Member Login</h2>  <br>
+        <h2>Details</h2>  
+		<p> Fill This We Will Contact You Soon !</p>
+		<br>
         <p style="color:red">{{ name }}</p>
-        <form action="/login_check" method="post">
-               <input type="text" name="username" class="form-control" placeholder="Enter Username">
+        <form action="/Details" method="post">
+               <input type="text" name="username" class="form-control" placeholder="Name">
+			   
                 <br>
-              <br>
+              
                       
-					    <input type="password" name="password" class="form-control" placeholder="Enter Password">
-					   <br>  <br>
-					   <button type="submit" class="button">LOGIN</button>
+					    <input type="password" name="password" class="form-control" placeholder="Phone no">
+					   
+					     <br> 
+					      <select id="things" name="things">
+							    <option value="title">Select Options For Donate</option>
+					        <option value="Amount">Amount</option>
+					        <option value="Dress">Dress</option>
+					        <option value="Books">Books</option>
+							<option value="Other">Other</option>
+					      </select>
+						<br>
+							<br>
+					   <input type="date" id="myDate" value="2020-04-09" >
+
+					   
+					  	<br>
+
+					  
+					   <p id="demo"></p>
+
+					   <script>
+					   function myFunction() {
+					     var x = document.getElementById("myDate").value;
+					     document.getElementById("demo").innerHTML = x;
+					   }
+					   </script>
+					  
+					   <br>
+					   <button type="submit" class="button"  onclick="myFunction()">SUBMIT</button>
 					   
 
                     </div>
