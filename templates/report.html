@@ -169,7 +169,7 @@ button{
 														
 															 
 															 <th>Price</th> 
-														  <th>Bill</th>
+														  
 														 </tr>
 															
 															
@@ -177,14 +177,14 @@ button{
 															  <tr> <td>Food</td> 
 																  <td>25/04/2020</td>
 																   <td>800	</td> 
-																   <td>	<a href="static/bill/1.jpg">Download</a></td> 
+																  
 															  </tr> 
 															  
 															  
 																  <tr> <td>Books</td> 
 																	  <td>26/04/2020</td> 
 																	   <td>299</td>
-																	   <td><a href="static/bill/2.jpg">Download</a></td> 
+																	   
 																    </tr> 
 																	   
 																	   
@@ -193,7 +193,7 @@ button{
 																		   <td>Dress</td> 
 																		   <td>27/04/2020</td> 
 																		   <td>2500</td> 
-																		   <td><a href="static/bill/3.jpg">Download</a></td>
+																		
 																		   <tr>
 
 																	   
@@ -223,7 +223,34 @@ button{
 
 
 
-  
+  <center>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Total spend',     3599],
+          ['Balance',      1401],
+        ]);
+
+        var options = {
+          title: 'Report Of This Month' 
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+ 
+
+  <div id="piechart" style="width: 900px; height: 500px;"></div>
+   </center>
+
 
 
 
