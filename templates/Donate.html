@@ -76,14 +76,15 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="/" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="\about" class="nav-link">About</a></li>
 	         
-	          <li class="nav-item"><a href="/gal" class="nav-link">Gallery</a></li>
-	          <li class="nav-item"><a href="/events" class="nav-link">Upcoming Events</a></li>
+	          <li class="nav-item"><a href="\gal" class="nav-link">Gallery</a></li>
+	          <li class="nav-item"><a href="\events" class="nav-link">Upcoming Events</a></li>
 	     
-	          <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+	          <li class="nav-item"><a href="\contact" class="nav-link">Contact</a></li>
 			    <li class="nav-item"><a href="\Donate" class="nav-link">Donate</a></li>
 				<li class="nav-item"><a href="\Requirement" class="nav-link">Requirement</a></li>
+				 <li class="nav-item"><a href="\Report" class="nav-link">Monthly Report</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -117,13 +118,11 @@
 	
 
 
-    <section class="ftco-section ftco-section-parallax bg-secondary ftco-no-pb">
-      <div class="parallax-img d-flex align-items-center">
-        <div class="container">
+    
           <div class="row d-flex justify-content-center">
             <div class="col-md-7 text-center heading-section heading-section-white heading-section-no-line ftco-animate">
-        <h2>Details</h2>  
-		<p> Fill This We Will Contact You Soon !</p>
+        <h1>Details</h1>  
+		<h3> Fill This We Will Contact You Soon !</h3>
 		<br>
         <p style="color:red">{{ name }}</p>
         <form action="/Details" method="post">
@@ -160,8 +159,9 @@
 					   </script>
 					  
 					   <br>
-					   <button type="submit" class="button"  onclick="myFunction()">SUBMIT</button>
-					   
+					   <button type="submit" class="btn btn-primary py-3 px-4"  onclick="myFunction()">SUBMIT</button>
+					     <br>
+						   <br>
 
                     </div>
                   </form>
