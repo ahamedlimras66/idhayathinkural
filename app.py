@@ -72,6 +72,10 @@ def contact():
 def Donate():
     return render_template('Donate.html')
 
+@app.route('/Requirement')
+def Requirement():
+    return render_template('Requirement.html')
+
 @app.route('/submit', methods=['POST'])
 def  submit():
     name = request.form['name']

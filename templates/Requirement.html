@@ -96,8 +96,8 @@
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
            
-            <h1 class="mb-2 bread">Donate</h1>
-			<p class="breadcrumbs"><span class="mr-2"><a href="\">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Donate <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-2 bread">Requirement</h1>
+			<p class="breadcrumbs"><span class="mr-2"><a href="\">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Requirement <i class="ion-ios-arrow-forward"></i></span></p>
 			
 			
 			<br>
@@ -124,25 +124,23 @@
             <div class="col-md-7 text-center heading-section heading-section-white heading-section-no-line ftco-animate">
         <h2>Details</h2>  
 		<p> Fill This We Will Contact You Soon !</p>
-		<br>
+		
         <p style="color:red">{{ name }}</p>
-        <form action="/Details" method="post">
-               <input type="text" name="username" class="form-control" placeholder="Name">
+        <form action="/redeq" method="post">
+               <input type="text" name="name" class="form-control" placeholder="Orphanage Name">
 			   
-                <br>
-              
+               
+			<div class="form-group row">
+				<div class="col-md-12">
+					<textarea name="command" id="text" class="form-control" placeholder="Address Of Orphanage With Phone No" cols="12" rows="6"></textarea>
+				</div>
+			</div>
+			   
+			   <textarea name="command" id="text" class="form-control" placeholder="Requirement Tpye Here" cols="12" rows="6"></textarea>
                       
-					    <input type="password" name="password" class="form-control" placeholder="Phone no">
+					    <input type="password" name="password" class="form-control" placeholder="Strength In Orphanage">
 					   
-					     <br> 
-					      <select id="things" name="things">
-							    <option value="title">Select Options Of Donate</option>
-					        <option value="Amount">Amount</option>
-					        <option value="Dress">Dress</option>
-					        <option value="Books">Books</option>
-							<option value="Other">Other</option>
-					      </select>
-						<br>
+					    
 							<br>
 					   <input type="date" id="myDate" value="2020-04-09" >
 
