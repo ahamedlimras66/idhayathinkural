@@ -244,13 +244,13 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
   ['Task', 'Hours per Day'],
-  ['Total Spend', 3599],
+  ['Spend', 3599],
   ['Balance', 1401],
 	  
 ]);
 
   // Optional; add a title and set the width and height of the chart
-  var options = {'title':'This Month Average', 'width':550, 'height':400};
+  var options = {'title':'This Month Average', 'width':450, 'height':350};
 
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
