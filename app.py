@@ -49,13 +49,16 @@ def static_sitemap():
 def home():
     cmds = commandBox.query.all()
     events = event.query.first()
-    events = str(events.dateTime)
-    return render_template('index.html',
-                            cmds=cmds,
-                            month=events[5:7],
-                            date=events[8:10],
-                            year=events[0:4],
-                            time=events[10:])
+    if events is not None:
+        events = str(events.dateTime)
+        return render_template('index.html',
+                                cmds=cmds,
+                                month=events[5:7],
+                                date=events[8:10],
+                                year=events[0:4],
+                                time=events[10:])
+    else:
+        return render_template('index.html')
 
 @app.route('/about')
 def about():
