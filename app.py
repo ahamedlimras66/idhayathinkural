@@ -2,6 +2,7 @@ import os
 from models.schema import *
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Flask, render_template, request, url_for, redirect, send_from_directory
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
@@ -17,7 +18,7 @@ login_manager.login_view = 'login'
 def create_table():
     db.create_all()
     if adminUser.query.filter_by(username="root").first() is None:
-        adminID = adminUser(username="root", password="root")
+        adminID = adminUser(username="root", password=generate_password_hash("root",method='sha256'))
         db.session.add(adminID)
         db.session.commit()
 
@@ -32,9 +33,13 @@ class MyAdminIndexView(AdminIndexView):
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('login', next=request.url))
 
+class UserAdmin(ModelView):
+    def on_model_change(self, form, model, is_created):
+        model.password = generate_password_hash(model.password,method='sha256')
+
 admin = Admin(app, index_view=MyAdminIndexView())
 admin.add_view(ModelView(commandBox,db.session))
-admin.add_view(ModelView(adminUser,db.session))
+admin.add_view(UserAdmin(adminUser,db.session))
 admin.add_view(ModelView(event,db.session))
 @app.route('/sitemap.xml')
 def static_sitemap():
@@ -93,13 +98,18 @@ def  submit():
 def login():
     return render_template('admin.html')
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return render_template('index.html')
+
 @app.route('/login_check', methods=['POST', 'GET'])
 def loginCheck():
     userName = request.form['username']
     password = request.form['password']
     user = adminUser.query.filter_by(username=userName).first()
-    if user:
-        if user.password == password:
+    if user and check_password_hash(user.password, password):
             login_user(user, remember=False)
             return redirect('/admin')
     return render_template('admin.html', name = "invalid login")
