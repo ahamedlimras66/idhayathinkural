@@ -28,29 +28,19 @@
     <link rel="stylesheet" href="static/css/icomoon.css">
     <link rel="stylesheet" href="static/css/style.css">
 	<style>
-	.button {
-	  background-color: #4CAF50;
-	  border: none;
-	  color: white;
-	  padding: 15px 32px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 16px;
-	  margin: 4px 2px;
-	  cursor: pointer;
-	  
-	}
-	input[type=text], select, textarea {
-	  width: 100%;
-	  padding: 12px;
-	  border: 1px solid #ccc;
-	  border-radius: 4px;
-	  box-sizing: border-box;
-	  margin-top: 6px;
-	  margin-bottom: 16px;
-	  resize: vertical;
-	}
+		
+		table, th, td {
+		  border: 1px solid black;
+		  border-collapse: collapse;
+		}
+		th, td {
+		  padding: 8px;
+		}
+		th {
+		  text-align: left;
+		}
+	
+	
 	</style>
   </head>
   <body>
@@ -82,8 +72,8 @@
 	          <li class="nav-item"><a href="\events" class="nav-link">Upcoming Events</a></li>
 	     
 	          <li class="nav-item"><a href="\contact" class="nav-link">Contact</a></li>
-			    <li class="nav-item active"><a href="\Donate" class="nav-link">Donate</a></li>
-				<li class="nav-item"><a href="\Requirement" class="nav-link">Requirement</a></li>
+			    <li class="nav-item"><a href="\Donate" class="nav-link">Donate</a></li>
+				<li class="nav-item active"><a href="\Requirement" class="nav-link">Requirement</a></li>
 				 <li class="nav-item"><a href="\report" class="nav-link">Monthly Report</a></li>
 	        </ul>
 	      </div>
@@ -91,14 +81,14 @@
 	  </nav>
     <!-- END nav -->
     
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('static/images/h1.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('static/images/h2.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
            
-            <h1 class="mb-2 bread">Donate</h1>
-			<p class="breadcrumbs"><span class="mr-2"><a href="\">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Donate <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-2 bread">Mail</h1>
+			
 			
 			
 			<br>
@@ -113,63 +103,64 @@
 
 	
 
-    
-
+	
+			
 	
 
 
     
+        <div class="container">
           <div class="row d-flex justify-content-center">
             <div class="col-md-7 text-center heading-section heading-section-white heading-section-no-line ftco-animate">
-        <h1>Details</h1>  
-		<h3> Fill This We Will Contact You Soon !</h3>
+				<br>
+					<br>
+						<br>
+							
+								<br>
+									<br>
+       <b> <h1>Requirement needed Details</h1>  
+		
+		<table style="width:100%">
+		  <tr>
+		    <th>Orphanage Name</th>
+		    <th>Address</th> 
+		    <th>Requirement</th>
+			<th>File</th>
+			<th>Strength</th>
+			<th>Date</th>
+		  </tr>
+		  <tr><h2>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+			 <td></td>
+			  <td></td>
+			   <td></td></h1>
+		  </tr>
+		  <tr>
+		    <h2><td></td>
+		    <td></td>
+		    <td></td>
+		 <td></td>
+		  <td></td>
+		   <td></td></h2>
+		  </tr>
+		  <tr>
+		    <h2><td></td>
+		    <td></td>
+		    <td></td>
+		 <td></td>
+		  <td></td>
+		   <td></td></h2>
+		  </tr>
+		</h1></table><b>
 		<br>
-		<p style="color:green">{{ info }}</p>
-        <p style="color:red">{{ error }}</p>
-        <form action="/DonateDetails" method="post">
-               <input type="text" name="name" class="form-control" placeholder="Name">
-                <br>
-					    <input type="number" name="phoneno" class="form-control" placeholder="Phone no">
-					     <br> 
-					      <select id="things" name="things">
-							<option value="title">Select Options Of Donate</option>
-					        <option value="Amount">Amount</option>
-					        <option value="Dress">Dress</option>
-					        <option value="Books">Books</option>
-							<option value="Other">Other</option>
-					      </select>
+			<br>
+				<br>
+					<br>
 						<br>
 							<br>
-					  
-
-										   <input type="date" id="theDate">
-					  	<br>
-
-					  
-					   <p id="demo"></p>
-
-		   		   <script>
-					   var date = new Date();
-
-                    var day = date.getDate();
-					var month = date.getMonth() + 1;
-					var year = date.getFullYear();
-
-					if (month < 10) month = "0" + month;
-					if (day < 10) day = "0" + day;
-
-					var today = year + "-" + month + "-" + day;
-
-
-					document.getElementById('theDate').value = today;
-		   		   </script>
-					  
-					   <br>
-					   <button type="submit" class="btn btn-primary py-3 px-4"  onclick="myFunction()">SUBMIT</button>
-					     <br>
-						   <br>
-
-                    </div>
+       	
                   </form>
                 </div>
               </div>
@@ -178,6 +169,18 @@
         </div>
       </div>
     </section>
+	<br>
+		<br>
+			<br>
+				<br>
+					<br>
+						<br>
+						<br>
+							<br>
+								<br>
+									<br>
+										<br>
+											<br>
 
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">

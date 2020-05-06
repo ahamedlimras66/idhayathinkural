@@ -94,6 +94,10 @@ def events():
 def contact():
     return render_template('contact.html')
     
+@app.route('/mail')
+def mail():
+    return render_template('mail.html')
+    
 @app.route('/Donate')
 def Donate():
     return render_template('Donate.html')
