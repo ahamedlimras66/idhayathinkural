@@ -146,21 +146,28 @@
 					   
 					    
 							<br>
-						   <input type="date" id="myDate" name='mydate' value="show_date()" >
 
-					   
-						  	<br>
+	   										   <input type="date" id="theDate">
+	   					  	<br>
 
 					  
-						   <p id="demo"></p>
+	   					   <p id="demo"></p>
 
-			   		   <script type="text/javascript"> 
-			   		   function show_date() { 
-			   		   var in_date = new Date();
-			   		   var str=in_date.getDate() +'/'+(in_date.getMonth()+1)+'/'+in_date.getFullYear()
-			   		   document.getElementById('display2').innerHTML=str
-			   		   }
-			   		   </script>
+	   		   		   <script>
+	   					   var date = new Date();
+
+	                       var day = date.getDate();
+	   					var month = date.getMonth() + 1;
+	   					var year = date.getFullYear();
+
+	   					if (month < 10) month = "0" + month;
+	   					if (day < 10) day = "0" + day;
+
+	   					var today = year + "-" + month + "-" + day;
+
+
+	   					document.getElementById('theDate').value = today;
+	   		   		   </script>
 					   <br>
 					   <button type="submit" class="btn btn-primary py-3 px-4"  onclick="myFunction()">SUBMIT</button>
 					   <br>
