@@ -10,6 +10,6 @@ db.init_app(app)
 def create_tables():
     db.create_all()
     if adminUser.query.filter_by(username="root").first() is None:
-        adminID = adminUser(username="root", password=generate_password_hash("root",method='sha256'))
+        adminID = adminUser(username="root", password=generate_password_hash("root",method='sha256'),mail='limraslim@gmail.com')
         db.session.add(adminID)
         db.session.commit()

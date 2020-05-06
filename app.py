@@ -28,7 +28,7 @@ mail = Mail(app)
 def create_table():
     db.create_all()
     if adminUser.query.filter_by(username="root").first() is None:
-        adminID = adminUser(username="root", password=generate_password_hash("root",method='sha256'))
+        adminID = adminUser(username="root", password=generate_password_hash("root",method='sha256'),mail="limraslim@gmail.com")
         db.session.add(adminID)
         db.session.commit()
 
@@ -102,10 +102,6 @@ def events():
 def contact():
     return render_template('contact.html')
     
-@app.route('/mail')
-def mail():
-    return render_template('mail.html')
-    
 @app.route('/Donate')
 def Donate():
     return render_template('Donate.html')
@@ -145,7 +141,10 @@ def RequirementDetial():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             req.url = "http://www.idhayathinkural.in/file/"+filename
             db.session.commit()
-    return render_template('Requirement.html',info="Thanks for filled")
+
+    return redirect("/sendmail/1/"+str(req.id))
+    # return render_template('Requirement.html',info="Thanks for filled")
+
 @app.route("/file/<fileName>")
 @login_required
 def view(fileName):
@@ -182,17 +181,41 @@ def DonateDetails():
         )
         db.session.add(dd)
         db.session.commit()
-        return render_template('Donate.html',info="Thanks for Donate")
+        return redirect("/sendmail/2/"+str(dd.id))
+        # return render_template('Donate.html',info="Thanks for Donate")
     else:
         return render_template('Donate.html',error="please enter details corretal")
 
-@app.route('/sendmail')
-def send_mail():
-    msg = Message('Hello', sender = 'idhayathinkuralmail@gmail.com', recipients = ['llxakrjoqjlcjibhqs@awdrt.net'])
-    msg.body = "This is the email body"
-    mail.send(msg)
-    # return render_template("index")
-
+@app.route('/sendmail/<type>/<id>')
+def send_mail(type,id):
+    toSend = adminUser.query.all()
+    if type == '1':
+        Type = "Requirement needed"
+        temp = requirementDetial.query.filter_by(id=id).first()
+        name=temp.name
+        addres_or_phone=temp.address
+        requirement_file=temp.requirement
+        strength=temp.strength
+        date=temp.mydate
+    else:
+        Type = "Donate"
+        temp = donateDetails.query.filter_by(id=id).first()
+        name=temp.name
+        addres_or_phone=temp.phone
+        requirement_file=temp.things
+        strength='N/A'
+        date=temp.mydate
+    for user in toSend:
+        msg = Message('Hello', sender = 'idhayathinkuralmail', recipients = [user.mail])
+        msg.html = render_template('mail.html',Type = Type,
+                                                name=name,
+                                                addres_or_phone=addres_or_phone,
+                                                requirement_file=requirement_file,
+                                                strength=strength,
+                                                date=date
+                                                )
+        mail.send(msg)
+    return redirect("/")
 @app.route('/login')
 def login():
     return render_template('admin.html')

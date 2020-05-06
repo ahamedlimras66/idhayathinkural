@@ -4,6 +4,7 @@ from flask_login import UserMixin
 class adminUser(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40))
+    mail = db.Column(db.String(40))
     password = db.Column(db.String(80))
 
 class commandBox(db.Model):
