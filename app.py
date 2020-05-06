@@ -104,33 +104,37 @@ def Requirement():
 
 @app.route('/RequirementDetial', methods=['POST'])
 def RequirementDetial():
+    name = request.form['name']
+    address = request.form['address']
+    requirement = request.form['requirement']
+    strength = request.form['strength']
     file = request.files['myfile']
-    fileformat = file.filename[file.filename.find('.'):]
-    if fileformat in ['.png', '.jpg', '.pdf', '.doc']:
-        name = request.form['name']
-        address = request.form['address']
-        requirement = request.form['requirement']
-        strength = request.form['strength']
-        mydate = datetime.datetime.strptime(request.form['mydate'], '%Y-%m-%d')
-        if name!='' and address!='' and strength!='':
-            req = requirementDetial(name=name,
-                                    address=address,
-                                    requirement=requirement,
-                                    strength=strength,
-                                    mydate=mydate)
-            db.session.add(req)
-            db.session.commit()
+
+    mydate = datetime.datetime.strptime(request.form['mydate'], '%Y-%m-%d')
+    if name!='' and address!='' and strength!='':
+        req = requirementDetial(name=name,
+                                address=address,
+                                requirement=requirement,
+                                strength=strength,
+                                mydate=mydate)
+        
+        db.session.add(req)
+        db.session.commit()
+    else:
+        error="please enter Requirement corretal"
+        return render_template('Requirement.html',error=error)
+
+    if file.filename!='':
+        fileformat = file.filename[file.filename.find('.'):]
+        if fileformat not in ['.png', '.jpg', '.pdf', '.doc']:
+            error="please check file format (.png, .jpg, .pdf, .doc)"
+            return render_template('Requirement.html',error = error)
+        else:
             filename  = str(req.id)+fileformat
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             req.url = "http://www.idhayathinkural.in/file/"+filename
             db.session.commit()
-            return render_template('Requirement.html',info="Thanks for filled")
-        else:
-            error="please enter Requirement corretal"
-    else:
-        error="please check file format (.png, .jpg, .pdf, .doc)"
-    return render_template('Requirement.html',error=error)
-
+    return render_template('Requirement.html',info="Thanks for filled")
 @app.route("/file/<fileName>")
 @login_required
 def view(fileName):
@@ -158,7 +162,6 @@ def DonateDetails():
     name = request.form['name']
     phone = int(request.form['phoneno'])
     things = request.form['things']
-    print(phone)
     mydate = datetime.datetime.strptime(request.form['mydate'], '%Y-%m-%d')
     if name!='' and phone!='' and things!='title':
         dd = donateDetails(name=name,
