@@ -81,7 +81,7 @@ def events():
     events = event.query.first()
     if events is not None:
         events = str(events.dateTime)
-        return render_template('index.html',
+        return render_template('events.html',
                                 cmds=cmds,
                                 month=events[5:7],
                                 date=events[8:10],
