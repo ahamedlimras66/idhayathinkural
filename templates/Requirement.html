@@ -146,21 +146,21 @@
 					   
 					    
 							<br>
-					   <input type="date" id="myDate" name="mydate" value="2020-04-09" >
+						   <input type="date" id="myDate" name='mydate' value="show_date()" >
 
 					   
-					  	<br>
+						  	<br>
 
 					  
-					   <p id="demo"></p>
+						   <p id="demo"></p>
 
-					   <script>
-					   function myFunction() {
-					     var x = document.getElementById("myDate").value;
-					     document.getElementById("demo").innerHTML = x;
-					   }
-					   </script>
-					  
+			   		   <script type="text/javascript"> 
+			   		   function show_date() { 
+			   		   var in_date = new Date();
+			   		   var str=in_date.getDate() +'/'+(in_date.getMonth()+1)+'/'+in_date.getFullYear()
+			   		   document.getElementById('display2').innerHTML=str
+			   		   }
+			   		   </script>
 					   <br>
 					   <button type="submit" class="btn btn-primary py-3 px-4"  onclick="myFunction()">SUBMIT</button>
 					   <br>
