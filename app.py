@@ -123,7 +123,6 @@ def RequirementDetial():
     else:
         error="please enter Requirement corretal"
         return render_template('Requirement.html',error=error)
-
     if file.filename!='':
         fileformat = file.filename[file.filename.find('.'):]
         if fileformat not in ['.png', '.jpg', '.pdf', '.doc']:
