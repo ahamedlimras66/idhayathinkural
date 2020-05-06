@@ -1,6 +1,7 @@
 import os
 import datetime
 from models.schema import *
+from flask_mail import Mail,Message
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -12,9 +13,16 @@ app.secret_key = 'my-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = "file/req"
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'idhayathinkuralmail@gmail.com'
+app.config['MAIL_PASSWORD'] = 'idhayathin123456'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+mail = Mail(app)
 
 @app.before_first_request
 def create_table():
@@ -177,6 +185,13 @@ def DonateDetails():
         return render_template('Donate.html',info="Thanks for Donate")
     else:
         return render_template('Donate.html',error="please enter details corretal")
+
+@app.route('/sendmail')
+def send_mail():
+    msg = Message('Hello', sender = 'idhayathinkuralmail@gmail.com', recipients = ['llxakrjoqjlcjibhqs@awdrt.net'])
+    msg.body = "This is the email body"
+    mail.send(msg)
+    # return render_template("index")
 
 @app.route('/login')
 def login():
