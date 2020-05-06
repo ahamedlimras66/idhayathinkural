@@ -156,8 +156,9 @@ def  submit():
 @app.route('/DonateDetails',methods=['POST'])
 def DonateDetails():
     name = request.form['name']
-    phone = request.form['phoneno']
+    phone = int(request.form['phoneno'])
     things = request.form['things']
+    print(phone)
     mydate = datetime.datetime.strptime(request.form['mydate'], '%Y-%m-%d')
     if name!='' and phone!='' and things!='title':
         dd = donateDetails(name=name,
