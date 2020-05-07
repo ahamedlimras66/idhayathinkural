@@ -21,14 +21,14 @@ class event(db.Model):
 class donateDetails(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(40),nullable=False)
-    phone = db.Column(db.Unicode,nullable=False)
+    phone = db.Column(db.String(10),nullable=False)
     things = db.Column(db.String(40),nullable=False)
     mydate = db.Column(db.Date,nullable=False)
 
 class requirementDetial(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(40),nullable=False)
-    phone = db.Column(db.Unicode,nullable=False)
+    phone = db.Column(db.String(10),nullable=False)
     address = db.Column(db.String,nullable=False)
     requirement = db.Column(db.String(40))
     strength = db.Column(db.String(40),nullable=False)

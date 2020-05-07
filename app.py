@@ -218,7 +218,6 @@ def send_mail(type,id):
                                         requirement_file=requirement_file,
                                         strength=strength,
                                         date=date,
-                                        call=number,
                                         )
             mail.send(msg)
     else:
