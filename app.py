@@ -8,6 +8,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Flask, render_template, request, url_for, redirect, send_from_directory, send_file
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
+
+#setup
 app = Flask(__name__,static_folder='static')
 app.secret_key = 'my-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
@@ -24,6 +26,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 mail = Mail(app)
 
+#creat database 
 @app.before_first_request
 def create_table():
     db.create_all()
@@ -32,10 +35,12 @@ def create_table():
         db.session.add(adminID)
         db.session.commit()
 
+#remember option
 @login_manager.user_loader
 def load_user(user_id):
 	return adminUser.query.get(int(user_id))
 
+#app admin option
 class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
         if current_user.is_authenticated:
@@ -55,11 +60,13 @@ admin.add_view(ModelView(donateDetails,db.session))
 admin.add_view(ModelView(requirementDetial,db.session))
 
 
-
+#sitemap for google site
 @app.route('/sitemap.xml')
 def static_sitemap():
     return send_from_directory(app.static_folder, request.path[1:])
 
+
+#app url
 @app.route('/')
 def home():
     cmds = commandBox.query.all()
@@ -113,14 +120,16 @@ def Requirement():
 @app.route('/RequirementDetial', methods=['POST'])
 def RequirementDetial():
     name = request.form['name']
+    phoneno = request.form['phoneno']
     address = request.form['address']
     requirement = request.form['requirement']
     strength = request.form['strength']
     file = request.files['myfile']
 
     mydate = datetime.datetime.strptime(request.form['mydate'], '%Y-%m-%d')
-    if name!='' and address!='' and strength!='':
+    if name!='' and address!='' and strength!='' and phoneno!='':
         req = requirementDetial(name=name,
+                                phone=phoneno,
                                 address=address,
                                 requirement=requirement,
                                 strength=strength,
@@ -190,31 +199,44 @@ def DonateDetails():
 def send_mail(type,id):
     toSend = adminUser.query.all()
     if type == '1':
-        Type = "Requirement needed"
         temp = requirementDetial.query.filter_by(id=id).first()
         name=temp.name
-        addres_or_phone=temp.address
-        requirement_file=temp.requirement
+        addres=temp.address
+        number=temp.phone
+        requirement=temp.requirement
+        requirement_file=temp.url
         strength=temp.strength
         date=temp.mydate
+        template = "reqmail.html"
+        for user in toSend:
+            msg = Message('Hello', sender = 'idhayathinkuralmail', recipients = [user.mail])
+            msg.html = render_template(template,
+                                        name=name,
+                                        addres=addres,
+                                        number=number,
+                                        requirement=requirement,
+                                        requirement_file=requirement_file,
+                                        strength=strength,
+                                        date=date,
+                                        call=number,
+                                        )
+            mail.send(msg)
     else:
-        Type = "Donate"
         temp = donateDetails.query.filter_by(id=id).first()
         name=temp.name
-        addres_or_phone=temp.phone
-        requirement_file=temp.things
-        strength='N/A'
+        number=temp.phone
+        option=temp.things
         date=temp.mydate
-    for user in toSend:
-        msg = Message('Hello', sender = 'idhayathinkuralmail', recipients = [user.mail])
-        msg.html = render_template('mail.html',Type = Type,
-                                                name=name,
-                                                addres_or_phone=addres_or_phone,
-                                                requirement_file=requirement_file,
-                                                strength=strength,
-                                                date=date
-                                                )
-        mail.send(msg)
+        template = "donormail.html"
+        for user in toSend:
+            msg = Message('Hello', sender = 'idhayathinkuralmail', recipients = [user.mail])
+            msg.html = render_template(template,
+                                        name=name,
+                                        number=number,
+                                        option=option,
+                                        date=date
+                                        )
+            mail.send(msg)
     return redirect("/")
 @app.route('/login')
 def login():

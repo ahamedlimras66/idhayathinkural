@@ -28,6 +28,7 @@ class donateDetails(db.Model):
 class requirementDetial(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(40),nullable=False)
+    phone = db.Column(db.Integer,nullable=False)
     address = db.Column(db.String,nullable=False)
     requirement = db.Column(db.String(40))
     strength = db.Column(db.String(40),nullable=False)
