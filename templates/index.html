@@ -587,6 +587,20 @@
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
   <script>
+		talking = true;
+	  function Speech(say) {
+               if ('speechSynthesis' in window && talking) {
+                    var utterance = new SpeechSynthesisUtterance(say);
+                    //msg.voice = voices[10]; // Note: some voices don't support altering params
+                    //msg.voiceURI = 'native';
+                    //utterance.volume = 1; // 0 to 1
+                    //utterance.rate = 0.1; // 0.1 to 10
+                    //utterance.pitch = 1; //0 to 2
+                    //utterance.text = 'Hello World';
+                    //utterance.lang = 'en-US';
+                    speechSynthesis.speak(utterance);
+               }
+          }
 	  function get_cmd(){
 		  fetch('/cmd').then(function(resphone){
 			  resphone.json().then(function(data){
@@ -611,8 +625,9 @@
 		  
 		  document.getElementById('name').value = '';
 		  document.getElementById('cmd').value = '';
-		  
+
 		  get_cmd()
+		  Speech("Thanks for sharing you ideas")
 
 	  }
   </script>
