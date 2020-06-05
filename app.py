@@ -80,7 +80,7 @@ def home():
                                 year=events[0:4],
                                 time=events[10:])
     else:
-        return render_template('index.html')
+        return render_template('index.html',cmds=cmds)
 
 @app.route('/about')
 def about():

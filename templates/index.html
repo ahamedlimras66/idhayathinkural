@@ -372,6 +372,10 @@
 		{% for cmd in cmds %}
 			<b>{{cmd.name}}:</b>{{cmd.command}}
 			<br>
+			{% if cmd.replay == None %}
+				<b>Bot:Thanks for sharing you ideas</b>
+				</br>
+			{% endif %}
 			<b>Replay:</b>{{cmd.replay}}
 			<br>
 		{% endfor %}
