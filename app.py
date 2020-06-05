@@ -1,11 +1,12 @@
 import os
 import datetime
+import json
 from models.schema import *
 from flask_mail import Mail,Message
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import Flask, render_template, request, url_for, redirect, send_from_directory, send_file
+from flask import Flask, render_template, request, url_for, redirect, send_from_directory, send_file, jsonify, Response
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 
@@ -65,12 +66,32 @@ admin.add_view(ModelView(requirementDetial,db.session))
 def static_sitemap():
     return send_from_directory(app.static_folder, request.path[1:])
 
+@app.route('/cmd')
+def show_cmd():
+    cmds = commandBox.query.all()
+    data = {"name":[],
+            "command":[],
+            "replay":[]}
+    for i in cmds:
+        data['name'].append(i.name)
+        data['command'].append(i.command)
+        data['replay'].append(i.replay)
+    return jsonify(data)
+
+@app.route('/save_cmd/<jsdata>')
+def save_cmd(jsdata):
+    data = json.loads(jsdata)
+    new_cmd = commandBox(name=data['name'],command=data['cmd'])
+    db.session.add(new_cmd)
+    db.session.commit()
+
+    return Response(status=200)
 
 #app url
 @app.route('/')
 def home():
-    cmds = commandBox.query.all()
     events = event.query.first()
+    cmds = commandBox.query.all()
     if events is not None:
         events = str(events.dateTime)
         return render_template('index.html',

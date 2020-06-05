@@ -354,31 +354,33 @@
 		    document.getElementById("demo").innerHTML=a;
 		  }
 		  </script> -->
-		<form action="/submit" method="post">
-			<input name="name" type="text" class="form-control" placeholder="Name">
+		<!-- <form action="/submit" method="post"> -->
+			<input name="name" type="text" class="form-control" placeholder="Name" id="name">
 			<br>
 			<br>
 				<div class="form-group row">
 					<div class="col-md-12">
-						<textarea name="command" id="text" class="form-control" placeholder="Write your message." cols="18" rows="6"></textarea>
+						<textarea name="command" id="cmd" class="form-control" placeholder="Write your message." cols="18" rows="6"></textarea>
 					</div>
 				</div>
 			<br>
-			<center> <input class="btn btn-primary py-3 px-4" type="submit"></center> 
-		</form>
+			<center> <input class="btn btn-primary py-3 px-4" type="submit" onclick="send_cmd()"></center> 
+		<!-- </form> -->
 
 	  </div>
 	  <div class="column" style="background-color:#ccc;">
+		<p id="show_cmd">
 		{% for cmd in cmds %}
 			<b>{{cmd.name}}:</b>{{cmd.command}}
 			<br>
 			{% if cmd.replay == None %}
 				<b>Bot:Thanks for sharing you ideas</b>
-				</br>
+				<br>
 			{% endif %}
 			<b>Replay:</b>{{cmd.replay}}
 			<br>
 		{% endfor %}
+		</p>
 	  </div>
 	</div>
 
@@ -584,6 +586,36 @@
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
+  <script>
+	  function get_cmd(){
+		  fetch('/cmd').then(function(resphone){
+			  resphone.json().then(function(data){
+				  var x = "";
+				  console.log(data)
+				  console.log(data.name)
+				  console.log(data.name.length)
+				  for(i=0;i<data.name.length;i++){
+						x += "<b>"+data['name'][i]+":</b>"+data['command'][i]+"<br>"
+						if(data['replay'][i]==null){
+							x+="<b>Bot:Thanks for sharing you ideas</b><br>"
+						}
+						x+="<b>Replay:</b>"+data["replay"][i]+"<br>"
+				  }
+				  console.log(x)
+				  document.getElementById("show_cmd").innerHTML = x;
+			  })
+		  })
+	  }
+
+	  function send_cmd(){
+		  var data = {};
+		  data['name'] = document.getElementById('name').value;
+		  data['cmd'] = document.getElementById('cmd').value;
+		  fetch('save_cmd/'+JSON.stringify(data))
+		  get_cmd()
+
+	  }
+  </script>
 
   <script src="static/js/jquery.min.js"></script>
   <script src="static/js/jquery-migrate-3.0.1.min.js"></script>
