@@ -591,9 +591,6 @@
 		  fetch('/cmd').then(function(resphone){
 			  resphone.json().then(function(data){
 				  var x = "";
-				  console.log(data)
-				  console.log(data.name)
-				  console.log(data.name.length)
 				  for(i=0;i<data.name.length;i++){
 						x += "<b>"+data['name'][i]+":</b>"+data['command'][i]+"<br>"
 						if(data['replay'][i]==null){
@@ -601,17 +598,20 @@
 						}
 						x+="<b>Replay:</b>"+data["replay"][i]+"<br>"
 				  }
-				  console.log(x)
 				  document.getElementById("show_cmd").innerHTML = x;
 			  })
 		  })
 	  }
 
-	  function send_cmd(){
+	  async function send_cmd(){
 		  var data = {};
 		  data['name'] = document.getElementById('name').value;
 		  data['cmd'] = document.getElementById('cmd').value;
-		  fetch('save_cmd/'+JSON.stringify(data))
+		  var res = await fetch('save_cmd/'+JSON.stringify(data))
+		  
+		  document.getElementById('name').value = '';
+		  document.getElementById('cmd').value = '';
+		  
 		  get_cmd()
 
 	  }
